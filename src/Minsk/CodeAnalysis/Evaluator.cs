@@ -10,7 +10,7 @@ namespace Minsk.CodeAnalysis
     {
         private readonly BoundProgram _program;
         private readonly Dictionary<VariableSymbol, object> _globals;
-        private readonly Dictionary<FunctionSymbol, BoundBlockStatement> _functions = new Dictionary<FunctionSymbol, BoundBlockStatement>();
+        private readonly Dictionary<FunctionPrototypeSymbol, BoundBlockStatement> _functions = new Dictionary<FunctionPrototypeSymbol, BoundBlockStatement>();
         private readonly Stack<Dictionary<VariableSymbol, object>> _locals = new Stack<Dictionary<VariableSymbol, object>>();
         private Random? _random;
 

@@ -12,7 +12,7 @@ namespace Minsk.CodeAnalysis.Symbols
             switch (symbol.Kind)
             {
                 case SymbolKind.Function:
-                    WriteFunctionTo((FunctionSymbol)symbol, writer);
+                    WriteFunctionTo((FunctionPrototypeSymbol)symbol, writer);
                     break;
                 case SymbolKind.GlobalVariable:
                     WriteGlobalVariableTo((GlobalVariableSymbol)symbol, writer);
@@ -31,7 +31,7 @@ namespace Minsk.CodeAnalysis.Symbols
             }
         }
 
-        private static void WriteFunctionTo(FunctionSymbol symbol, TextWriter writer)
+        private static void WriteFunctionTo(FunctionPrototypeSymbol symbol, TextWriter writer)
         {
             writer.WriteKeyword(SyntaxKind.FunctionKeyword);
             writer.WriteSpace();

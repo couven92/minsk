@@ -32,7 +32,7 @@ namespace Minsk.CodeAnalysis.Emit
         private readonly MethodReference _randomCtorReference;
         private readonly MethodReference _randomNextReference;
         private readonly AssemblyDefinition _assemblyDefinition;
-        private readonly Dictionary<FunctionSymbol, MethodDefinition> _methods = new Dictionary<FunctionSymbol, MethodDefinition>();
+        private readonly Dictionary<FunctionPrototypeSymbol, MethodDefinition> _methods = new Dictionary<FunctionPrototypeSymbol, MethodDefinition>();
         private readonly Dictionary<VariableSymbol, VariableDefinition> _locals = new Dictionary<VariableSymbol, VariableDefinition>();
         private readonly Dictionary<BoundLabel, int> _labels = new Dictionary<BoundLabel, int>();
         private readonly List<(int InstructionIndex, BoundLabel Target)> _fixups = new List<(int InstructionIndex, BoundLabel Target)>();
@@ -201,7 +201,7 @@ namespace Minsk.CodeAnalysis.Emit
             return _diagnostics.ToImmutableArray();
         }
 
-        private void EmitFunctionDeclaration(FunctionSymbol function)
+        private void EmitFunctionDeclaration(FunctionPrototypeSymbol function)
         {
             var functionType = _knownTypes[function.Type];
             var method = new MethodDefinition(function.Name, MethodAttributes.Static | MethodAttributes.Private, functionType);
@@ -218,7 +218,7 @@ namespace Minsk.CodeAnalysis.Emit
             _methods.Add(function, method);
         }
 
-        private void EmitFunctionBody(FunctionSymbol function, BoundBlockStatement body)
+        private void EmitFunctionBody(FunctionPrototypeSymbol function, BoundBlockStatement body)
         {
             var method = _methods[function];
             _locals.Clear();

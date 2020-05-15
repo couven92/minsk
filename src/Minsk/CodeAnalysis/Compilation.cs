@@ -35,7 +35,7 @@ namespace Minsk.CodeAnalysis
         public bool IsScript { get; }
         public Compilation? Previous { get; }
         public ImmutableArray<SyntaxTree> SyntaxTrees { get; }
-        public FunctionSymbol? MainFunction => GlobalScope.MainFunction;
+        public FunctionPrototypeSymbol? MainFunction => GlobalScope.MainFunction;
         public ImmutableArray<FunctionSymbol> Functions => GlobalScope.Functions;
         public ImmutableArray<VariableSymbol> Variables => GlobalScope.Variables;
 
@@ -117,7 +117,7 @@ namespace Minsk.CodeAnalysis
                 EmitTree(GlobalScope.ScriptFunction, writer);
         }
 
-        public void EmitTree(FunctionSymbol symbol, TextWriter writer)
+        public void EmitTree(FunctionPrototypeSymbol symbol, TextWriter writer)
         {
             var program = GetProgram();
             symbol.WriteTo(writer);

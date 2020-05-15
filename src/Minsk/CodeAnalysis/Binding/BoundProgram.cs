@@ -7,9 +7,9 @@ namespace Minsk.CodeAnalysis.Binding
     {
         public BoundProgram(BoundProgram? previous,
                             ImmutableArray<Diagnostic> diagnostics,
-                            FunctionSymbol? mainFunction,
-                            FunctionSymbol? scriptFunction,
-                            ImmutableDictionary<FunctionSymbol, BoundBlockStatement> functions)
+                            FunctionPrototypeSymbol? mainFunction,
+                            FunctionPrototypeSymbol? scriptFunction,
+                            ImmutableDictionary<FunctionPrototypeSymbol, BoundBlockStatement> functions)
         {
             Previous = previous;
             Diagnostics = diagnostics;
@@ -20,8 +20,8 @@ namespace Minsk.CodeAnalysis.Binding
 
         public BoundProgram? Previous { get; }
         public ImmutableArray<Diagnostic> Diagnostics { get; }
-        public FunctionSymbol? MainFunction { get; }
-        public FunctionSymbol? ScriptFunction { get; }
-        public ImmutableDictionary<FunctionSymbol, BoundBlockStatement> Functions { get; }
+        public FunctionPrototypeSymbol? MainFunction { get; }
+        public FunctionPrototypeSymbol? ScriptFunction { get; }
+        public ImmutableDictionary<FunctionPrototypeSymbol, BoundBlockStatement> Functions { get; }
     }
 }

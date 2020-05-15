@@ -22,14 +22,14 @@ namespace Minsk.CodeAnalysis.Lowering
             return new BoundLabel(name);
         }
 
-        public static BoundBlockStatement Lower(FunctionSymbol function, BoundStatement statement)
+        public static BoundBlockStatement Lower(FunctionPrototypeSymbol function, BoundStatement statement)
         {
             var lowerer = new Lowerer();
             var result =  lowerer.RewriteStatement(statement);
             return RemoveDeadCode(Flatten(function, result));
         }
 
-        private static BoundBlockStatement Flatten(FunctionSymbol function, BoundStatement statement)
+        private static BoundBlockStatement Flatten(FunctionPrototypeSymbol function, BoundStatement statement)
         {
             var builder = ImmutableArray.CreateBuilder<BoundStatement>();
             var stack = new Stack<BoundStatement>();

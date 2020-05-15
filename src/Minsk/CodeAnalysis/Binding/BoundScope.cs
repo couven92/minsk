@@ -19,7 +19,7 @@ namespace Minsk.CodeAnalysis.Binding
         public bool TryDeclareVariable(VariableSymbol variable)
             => TryDeclareSymbol(variable);
 
-        public bool TryDeclareFunction(FunctionSymbol function)
+        public bool TryDeclareFunction(FunctionPrototypeSymbol function)
             => TryDeclareSymbol(function);
 
         private bool TryDeclareSymbol<TSymbol>(TSymbol symbol)

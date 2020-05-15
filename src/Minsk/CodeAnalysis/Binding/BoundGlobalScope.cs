@@ -7,8 +7,8 @@ namespace Minsk.CodeAnalysis.Binding
     {
         public BoundGlobalScope(BoundGlobalScope? previous,
                                 ImmutableArray<Diagnostic> diagnostics,
-                                FunctionSymbol? mainFunction,
-                                FunctionSymbol? scriptFunction,
+                                FunctionPrototypeSymbol? mainFunction,
+                                FunctionPrototypeSymbol? scriptFunction,
                                 ImmutableArray<FunctionSymbol> functions,
                                 ImmutableArray<VariableSymbol> variables,
                                 ImmutableArray<BoundStatement> statements)
@@ -24,8 +24,8 @@ namespace Minsk.CodeAnalysis.Binding
 
         public BoundGlobalScope? Previous { get; }
         public ImmutableArray<Diagnostic> Diagnostics { get; }
-        public FunctionSymbol? MainFunction { get; }
-        public FunctionSymbol? ScriptFunction { get; }
+        public FunctionPrototypeSymbol? MainFunction { get; }
+        public FunctionPrototypeSymbol? ScriptFunction { get; }
         public ImmutableArray<FunctionSymbol> Functions { get; }
         public ImmutableArray<VariableSymbol> Variables { get; }
         public ImmutableArray<BoundStatement> Statements { get; }

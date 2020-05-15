@@ -3,19 +3,14 @@ using Minsk.CodeAnalysis.Syntax;
 
 namespace Minsk.CodeAnalysis.Symbols
 {
-    public sealed class FunctionSymbol : Symbol
+    public sealed class FunctionSymbol : FunctionPrototypeSymbol
     {
-        public FunctionSymbol(string name, ImmutableArray<ParameterSymbol> parameters, TypeSymbol type, FunctionDeclarationSyntax? declaration = null)
-            : base(name)
+        public FunctionSymbol(string name, ImmutableArray<ParameterSymbol> parameters, TypeSymbol type, FunctionDeclarationSyntax declaration)
+            : base(name, parameters, type)
         {
-            Parameters = parameters;
-            Type = type;
             Declaration = declaration;
         }
 
-        public override SymbolKind Kind => SymbolKind.Function;
-        public FunctionDeclarationSyntax? Declaration { get; }
-        public ImmutableArray<ParameterSymbol> Parameters { get; }
-        public TypeSymbol Type { get; }
+        public FunctionDeclarationSyntax Declaration { get; }
     }
 }

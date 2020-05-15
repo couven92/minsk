@@ -159,7 +159,7 @@ namespace Minsk
         private void EvaluateDump(string functionName)
         {
             var compilation = _previous ?? emptyCompilation;
-            var symbol = compilation.GetSymbols().OfType<FunctionSymbol>().SingleOrDefault(f => f.Name == functionName);
+            var symbol = compilation.GetSymbols().OfType<FunctionPrototypeSymbol>().SingleOrDefault(f => f.Name == functionName);
             if (symbol == null)
             {
                 Console.ForegroundColor = ConsoleColor.Red;

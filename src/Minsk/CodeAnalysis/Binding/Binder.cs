@@ -75,15 +75,15 @@ namespace Minsk.CodeAnalysis.Binding
 
             var functions = binder._scope.GetDeclaredFunctions();
 
-            FunctionSymbol? mainFunction;
-            FunctionSymbol? scriptFunction;
+            FunctionPrototypeSymbol? mainFunction;
+            FunctionPrototypeSymbol? scriptFunction;
 
             if (isScript)
             {
                 mainFunction = null;
                 if (globalStatements.Any())
                 {
-                    scriptFunction = new FunctionSymbol("$eval", ImmutableArray<ParameterSymbol>.Empty, TypeSymbol.Any, null);
+                    scriptFunction = new FunctionPrototypeSymbol("$eval", ImmutableArray<ParameterSymbol>.Empty, TypeSymbol.Any);
                 }
                 else
                 {
@@ -92,27 +92,29 @@ namespace Minsk.CodeAnalysis.Binding
             }
             else
             {
-                mainFunction = functions.FirstOrDefault(f => f.Name == "main");
+                var mainDeclFunction = functions.FirstOrDefault(f => f.Name == "main");
+                mainFunction = mainDeclFunction;
                 scriptFunction = null;
 
-                if (mainFunction != null)
+                if (mainDeclFunction != null)
                 {
-                    if (mainFunction.Type != TypeSymbol.Void || mainFunction.Parameters.Any())
-                        binder.Diagnostics.ReportMainMustHaveCorrectSignature(mainFunction.Declaration!.Identifier.Location);
+                    if (mainDeclFunction.Type != TypeSymbol.Void || mainDeclFunction.Parameters.Any())
+                        binder.Diagnostics.ReportMainMustHaveCorrectSignature(mainDeclFunction.Declaration.Identifier.Location);
+
                 }
 
                 if (globalStatements.Any())
                 {
-                    if (mainFunction != null)
+                    if (mainDeclFunction != null)
                     {
-                        binder.Diagnostics.ReportCannotMixMainAndGlobalStatements(mainFunction.Declaration!.Identifier.Location);
+                        binder.Diagnostics.ReportCannotMixMainAndGlobalStatements(mainDeclFunction.Declaration.Identifier.Location);
 
                         foreach (var globalStatement in firstGlobalStatementPerSyntaxTree)
                             binder.Diagnostics.ReportCannotMixMainAndGlobalStatements(globalStatement.Location);
                     }
                     else
                     {
-                        mainFunction = new FunctionSymbol("main", ImmutableArray<ParameterSymbol>.Empty, TypeSymbol.Void, null);
+                        mainFunction = new FunctionPrototypeSymbol("main", ImmutableArray<ParameterSymbol>.Empty, TypeSymbol.Void);
                     }
                 }
             }
@@ -131,9 +133,9 @@ namespace Minsk.CodeAnalysis.Binding
             var parentScope = CreateParentScope(globalScope);
 
             if (globalScope.Diagnostics.Any())
-                return new BoundProgram(previous, globalScope.Diagnostics, null, null, ImmutableDictionary<FunctionSymbol, BoundBlockStatement>.Empty);
+                return new BoundProgram(previous, globalScope.Diagnostics, null, null, ImmutableDictionary<FunctionPrototypeSymbol, BoundBlockStatement>.Empty);
 
-            var functionBodies = ImmutableDictionary.CreateBuilder<FunctionSymbol, BoundBlockStatement>();
+            var functionBodies = ImmutableDictionary.CreateBuilder<FunctionPrototypeSymbol, BoundBlockStatement>();
             var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
 
             foreach (var function in globalScope.Functions)
@@ -610,7 +612,7 @@ namespace Minsk.CodeAnalysis.Binding
                 return new BoundErrorExpression();
             }
 
-            var function = symbol as FunctionSymbol;
+            var function = symbol as FunctionPrototypeSymbol;
             if (function == null)
             {
                 _diagnostics.ReportNotAFunction(syntax.Identifier.Location, syntax.Identifier.Text);
