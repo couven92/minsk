@@ -14,7 +14,7 @@ namespace Minsk.CodeAnalysis.Syntax
 
         private int _start;
         private SyntaxKind _kind;
-        private object _value;
+        private object? _value;
 
         public Lexer(SyntaxTree syntaxTree)
         {

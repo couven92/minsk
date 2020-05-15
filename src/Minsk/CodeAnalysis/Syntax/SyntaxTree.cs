@@ -73,8 +73,6 @@ namespace Minsk.CodeAnalysis.Syntax
 
             void ParseTokens(SyntaxTree st, out CompilationUnitSyntax root, out ImmutableArray<Diagnostic> d)
             {
-                root = null;
-
                 var l = new Lexer(st);
                 while (true)
                 {
